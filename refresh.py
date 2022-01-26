@@ -7,7 +7,7 @@ import ast
 import dropbox
 
 #dropbox token
-dbx = dropbox.Dropbox('sl.BAx0Wl0B70_rqNVGcyruEMWI30o96mFvjojgp_6KV7lUI0dfqbGyzdXmfMeUeFnoXUpOs7-pnQqvR3tc8JaXmnglndeEtRVafsihoijONBC61MC9jhmtkf7f9x9FNL9ABVn65ZaQhpc')
+dbx = dropbox.Dropbox('')
 
 
 def scrape_new(collection_address, csv_name):
