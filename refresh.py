@@ -4,10 +4,10 @@ import json
 import cloudscraper
 import time
 import ast
-import dropbox
+#import dropbox
 
 #dropbox token
-dbx = dropbox.Dropbox('')
+#dbx = dropbox.Dropbox('')
 
 
 def scrape_new(collection_address, csv_name):
@@ -60,9 +60,9 @@ for address, file_name in collections.items():
     new_df.to_csv(f'{file_name}.csv', index=False)
     scrape_new(address, file_name)
     
-    dbx.files_delete_v2(fr'/Levana/{file_name}.csv')
-    with open(f'{file_name}.csv', "rb") as f:
-        dbx.files_upload(f.read(), fr'/Levana/{file_name}.csv', mute = True)
+    #dbx.files_delete_v2(fr'/Levana/{file_name}.csv')
+    #with open(f'{file_name}.csv', "rb") as f:
+    #    dbx.files_upload(f.read(), fr'/Levana/{file_name}.csv', mute = True)
     
     print(f'Done with {file_name}')
 
