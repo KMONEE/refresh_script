@@ -11,9 +11,15 @@ dbx = dropbox.Dropbox('')
 
 
 def scrape_new(collection_address, csv_name):
-    scraper = cloudscraper.create_scraper()
+    scraper = cloudscraper.create_scraper(
+    browser={
+        'browser': 'chrome',
+        'platform': 'android',
+        'desktop': False
+        }
+    )
+    #scraper = cloudscraper.create_scraper()
     counter = 0
-    print()
     while counter != 1:
         try:
             max_page = json.loads(scraper.get(f"https://randomearth.io/api/items?collection_addr={collection_address}&page=99999").text)['pages']
@@ -33,6 +39,7 @@ def scrape_new(collection_address, csv_name):
                 final_df.to_csv(f'{csv_name}.csv', index=False)
                 time.sleep(.30) #yeah yeah it's not efficient, sue me!
                 counter += 1
+                
             except Exception as e:
                 print(page)
                 time.sleep(3)
@@ -47,9 +54,8 @@ collections = {
     }
 
 
-
 for address, file_name in collections.items():
-    print('starting')
+    print(f'starting {file_name}')
     new_df = pd.read_csv('headers.csv')
     new_df.to_csv(f'{file_name}.csv', index=False)
     scrape_new(address, file_name)
