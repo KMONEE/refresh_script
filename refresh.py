@@ -13,6 +13,7 @@ dbx = dropbox.Dropbox('')
 def scrape_new(collection_address, csv_name):
     scraper = cloudscraper.create_scraper()
     counter = 0
+    print()
     while counter != 1:
         try:
             max_page = json.loads(scraper.get(f"https://randomearth.io/api/items?collection_addr={collection_address}&page=99999").text)['pages']
@@ -45,7 +46,10 @@ collections = {
     'terra1p70x7jkqhf37qa7qm4v23g4u4g8ka4ktxudxa7':'meteor_dust_nfts'
     }
 
+
+
 for address, file_name in collections.items():
+    print('starting')
     new_df = pd.read_csv('headers.csv')
     new_df.to_csv(f'{file_name}.csv', index=False)
     scrape_new(address, file_name)
@@ -55,3 +59,4 @@ for address, file_name in collections.items():
         dbx.files_upload(f.read(), fr'/Levana/{file_name}.csv', mute = True)
     
     print(f'Done with {file_name}')
+
