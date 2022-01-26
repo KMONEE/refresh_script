@@ -12,7 +12,15 @@ dbx = dropbox.Dropbox('')
 
 def scrape_new(collection_address, csv_name):
     scraper = cloudscraper.create_scraper()
-    max_page = json.loads(scraper.get(f"https://randomearth.io/api/items?collection_addr={collection_address}&page=99999").text)['pages']
+    counter = 0
+    while counter != 1:
+        try:
+            max_page = json.loads(scraper.get(f"https://randomearth.io/api/items?collection_addr={collection_address}&page=99999").text)['pages']
+            counter += 1
+        except Exception as e:
+            time.sleep(3)
+            pass
+
     for page in range(1, max_page+1):
         counter = 0
         while counter != 1:
@@ -45,3 +53,5 @@ for address, file_name in collections.items():
     dbx.files_delete_v2(fr'/Levana/{file_name}.csv')
     with open(f'{file_name}.csv', "rb") as f:
         dbx.files_upload(f.read(), fr'/Levana/{file_name}.csv', mute = True)
+    
+    print(f'Done with {file_name}')
